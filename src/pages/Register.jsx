@@ -1,18 +1,37 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import axios from "axios"
 
 export default function Register() {
-    const [name, setName] = useState(" ")
-    const [email, setEmail] = useState(" ")
-    const [password, setPassword] = useState(" ")
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     const handleRegister = async(e) => {
         e.preventDefault();
+        try{
+            const response = await axios.post(
+                " ",
+                {
+                  name: name,
+                  email: email,
+                  password: password
+                },
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                },
+              );
+              console.log(response.data);
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     return (
         <div className="flex min-w-full min-h-screen justify-center items-center">
-            <article className="flex flex-col bg-[#18191b] text-white justify-center px-8 py-12 rounded-2xl w-[50%]">
+            <article className="flex flex-col bg-[#18191b] text-white justify-center px-8 py-12 rounded-2xl max-w-[100%] md:w-[50%]">
                 <h2 className="text-2xl font-bold text-center mb-[5%]">
                     Register
                 </h2>
@@ -40,16 +59,15 @@ export default function Register() {
 
                     <button
                         type="submit"
-                        className="mt-[2%] font-bold bg-[#5ae30bc0]  rounded-lg px-1 py-2"
+                        className="mt-[2%] font-bold bg-[#5ae30bc0]  rounded-lg px-1 py-2 hover:opacity-70 hover:cursor-pointer"
                     >
                         Sign Up
                     </button>
 
                     <div className="flex flex-row gap-2 justify-center">
-                        <h2 className="font-semibold">Already have an account?</h2>
-                        {/* <Link to="/register" className="hover:text-yellow-400">
-                            Log In
-                        </Link> */}
+                        <Link to="/login" className="font-semibold">
+                        Already have an account?
+                        </Link>
                     </div>
 
                     <p className="text-[11px] w-[52ch]">

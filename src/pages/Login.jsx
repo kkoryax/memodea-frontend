@@ -1,29 +1,49 @@
+import { Link } from "react-router-dom";
+
 export default function Login() {
+
     return (
-    <div className="flex min-w-full min-h-screen justify-center items-center">
-        <article className="flex flex-col bg-white justify-center px-8 py-12 rounded-2xl w-[50%]">
+        <div className="flex min-w-full min-h-screen justify-center items-center">
+        <article className="flex flex-col bg-[#18191b] text-white justify-center px-8 py-12 rounded-2xl max-w-[100%] md:w-[50%]">
+            <img src="/public/memodea_logo.png" alt="" className="-mt-[25%]"/>
             <h2 className="text-2xl font-bold text-center mb-[5%]">
                 Login
             </h2>
             <form className="flex flex-col justify-center gap-4">
                 <div className="flex flex-col">
-                    <label htmlFor="email" className="font-semibold text-gray-700">Email</label>
-                    <input type="email" placeholder="email" className="bg-white border-1 rounded-lg px-1 py-2"
+                    <label htmlFor="email" className="font-semibold text-gray-400">Email</label>
+                    <input type="email" placeholder="Email" className="bg-[#212226] border-1 rounded-lg px-1 py-2"
                     />
                 </div>
 
                 <div className="flex flex-col">
-                    <label htmlFor="password" className="font-semibold text-gray-700">Password</label>
-                    <input type="password" placeholder="password" className="bg-white border-1 rounded-lg px-1 py-2"
+                    <label htmlFor="password" className="font-semibold text-gray-400">Password</label>
+                    <input type="password" placeholder="Password" className="bg-[#212226] border-1 rounded-lg px-1 py-2"
                     />
                 </div>
 
                 <button
                     type="submit"
-                    className="mt-[2%] bg-white border-1 rounded-lg px-1 py-2"
+                    className="mt-[2%] font-bold bg-[#0b8de3c0]  rounded-lg px-1 py-2 hover:opacity-70 hover:cursor-pointer"
                 >
-                    Sign Up
+                    Log In
                 </button>
+
+                <div className="flex flex-row gap-2 justify-center">
+                    <h2 className="font-semibold">Forgotten password?</h2>
+                    {/* <Link to="/register" className="hover:text-yellow-400">
+                        Log In
+                    </Link> */}
+                </div>
+                    <p className="text-[11px] flex justify-center">
+                        OR
+                    </p>
+                <Link
+                    to="/register"
+                    className="flex justify-center mt-[2%] font-bold bg-[#5ae30bc0]  rounded-lg px-1 py-2 hover:opacity-70 hover:cursor-pointer"
+                >
+                    Create New Account
+                </Link>
             </form>
         </article>
     </div>
