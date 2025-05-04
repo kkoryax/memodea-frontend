@@ -4,11 +4,11 @@ const Note = ({ note }) => {
       <div>
         {note.isPinned && (
           <div className="flex items-center mb-2">
-            <span className="text-yellow-500 text-sm font-bold">📌 Pinned</span>
+            <span className="text-background-a10 text-sm font-bold">📌 Pinned</span>
           </div>
         )}
 
-        <h2 className="text-xl font-bold mb-2 text-gray-800 truncate">
+        <h2 className="text-xl font-bold mb-2 text-gray-800">
           {note.title}
         </h2>
 
