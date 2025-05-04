@@ -41,7 +41,7 @@ export default function Login() {
     return (
         <main className="min-h-screen bg-background-a30 flex flex-col">
             <div className="flex min-w-full min-h-screen justify-center items-center">
-                <article className="flex flex-col shadow-md bg-background-a10 text-white justify-center px-8 py-12 rounded-2xl max-w-[100%] md:w-[50%]">
+                <article className="flex flex-col shadow-md bg-background-a10 text-white justify-center px-8 py-12 rounded-2xl max-w-[100%] md:max-w-[50%] lg:max-w-[50%]">
                     <img src="/memodea_logo.png" alt="" className="-mt-[25%]"/>
                     <h2 className="text-2xl font-bold text-center mb-[5%]">
                         Account Login
