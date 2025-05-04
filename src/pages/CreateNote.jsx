@@ -97,7 +97,7 @@ const CreateNote = ({ onNoteAdded }) => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-button-a20 text-white py-2 rounded-md hover:cursor-pointer hover:opacity-70 transition"
+          className="w-full bg-button-a20 font-semibold text-white py-2 rounded-md hover:cursor-pointer hover:opacity-70 transition"
         >
           {loading ? "Saving..." : "Create"}
         </button>

@@ -1,8 +1,9 @@
 import { useAuth } from "../../context/AuthContext"
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Note from "../components/Note";
 import CreateNote from "./CreateNote";
+import { Calendar } from "@/components/ui/calendar"
 
 export default function UserDashboard() {
     const { user } = useAuth();
@@ -12,6 +13,8 @@ export default function UserDashboard() {
     const [error, setError] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const [date, setDate] = useState(new Date());
+
     const fetchNotes = async () => {
         try {
           const response = await axios.get("http://localhost:3000/mongo/get-all-notes", {
@@ -19,7 +22,7 @@ export default function UserDashboard() {
               Authorization: `Bearer ${user.token}`,
             },
           });
-          console.log(response.data.notes) //check return object
+          console.log(response.data.notes)
           setNotes(response.data.notes || []);
         } catch (err) {
           console.error(err);
@@ -35,27 +38,35 @@ export default function UserDashboard() {
 
     return (
         <main className="min-h-screen bg-background-a30 flex flex-col">
-            <div className="px-[5%] py-[5%] md:py-[2%] flex flex-col md:flex-row w-full justify-between gap-4">
+            <div className="px-[5%] py-[5%] md:py-[2%] flex flex-col md:flex-row w-full justify-between gap-12">
                 <div className="w-full md:w-1/3 mb-[5%]">
                     <h2 className="text-white text-3xl">Welcome back,
                         <span className="font-bold"> {user.user.name}</span> !
                     </h2>
                     <h2 className="text-white text-xl">{user.user.email}</h2>
+                    <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        className="hidden md:flex mt-[5%] rounded-md border w-fit bg-background-a10 text-white"
+                        footer={
+                            date ? `Selected: ${date.toLocaleDateString()}` : "Pick a day."
+                        }/>
                 </div>
-                <div className="w-full md:w-2/3">
-                <article className="bg-background-a10 mb-6 rounded-2xl shadow-md p-4 flex flex-row gap-6">
-                    <p className="text-white text-2xl font-bold">{user.user.name}</p>
-                    <textarea
-                            placeholder="Create a new note..."
-                            onClick={() => setIsModalOpen(true)}
-                            className=" bg-background-a40 text-white px-4 py-1 rounded-md w-full"
-                    >
-                    </textarea>
-                </article>
+                <div className="-mt-12 md:mt-0 w-full md:w-2/3">
+                    <article className="bg-background-a10 mb-6 rounded-2xl shadow-md p-4 flex flex-row gap-6">
+                        <p className="text-white text-2xl font-bold">{user.user.name}</p>
+                        <textarea
+                                placeholder="Create a new note..."
+                                onClick={() => setIsModalOpen(true)}
+                                className=" bg-background-a40 text-white px-4 py-1 rounded-md w-full"
+                        >
+                        </textarea>
+                    </article>
 
                     {isModalOpen && (
                         <div
-                        className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50"
+                        className="fixed inset-0  backdrop-blur-sm flex items-center justify-center z-50"
                         onClick={() => setIsModalOpen(false)}
                         >
                             <div
@@ -64,7 +75,7 @@ export default function UserDashboard() {
                             >
                                 <button
                                 onClick={() => setIsModalOpen(false)}
-                                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 hover:cursor-pointer"
                                 >
                                 ✖
                                 </button>
