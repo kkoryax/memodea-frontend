@@ -3,11 +3,11 @@ import { Outlet, Link } from "react-router-dom";
 
 export default function NavigatorTab() {
     return(
-        <div className="min-h-screen bg-background-a30 flex flex-col">
+        <div>
             <nav className="bg-background-a10 text-white p-4 shadow-md">
                 <div className="flex flex-row justify-between px-[2%] items-center">
                     <Link to="/">
-                        <img src="/public/memodea_logo.png" alt="" className="w-[120px]"/>
+                        <img src="/memodea_logo.png" alt="" className="w-[120px]"/>
                     </Link>
                     <ul className="flex gap-4">
                         <li>
@@ -23,7 +23,7 @@ export default function NavigatorTab() {
                     </ul>
                 </div>
             </nav>
-        <div className="p-6 max-w-4xl mx-auto w-full">
+        <div className="max-w-4xl mx-auto w-full">
             <Outlet />
         </div>
         </div>
