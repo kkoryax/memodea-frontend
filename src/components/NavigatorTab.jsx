@@ -1,25 +1,90 @@
 import React from "react";
+import axios from "axios";
 import { Outlet, Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext"
+import { useState } from "react";
 
 export default function NavigatorTab() {
+    const  { user, logout } = useAuth();
+    const [ notes, setNotes ] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+
+    console.log("User object in NavigatorTab:", user);
+
+    const fetchNotes = async() => {
+        try {
+            const data = await axios.get("http://localhost:3000/mongo/get-all-notes");
+            setNotes(data.notes || []);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        if (!searchQuery.trim()) {
+            fetchNotes();
+            return;
+        }
+        try {
+            const data = await axios.post("http://localhost:3000/mongo/search-notes", {
+                searchQuery
+            });
+            setNotes(data.notes || [])
+        } catch (err) {
+            console.error("Failed to search notes: ", err);
+            SpeechSynthesisErrorEvent("Failed to search notes.");
+        }
+    }
+
     return(
         <div>
             <nav className="bg-background-a10 text-white p-4 shadow-md">
                 <div className="flex flex-row justify-between px-[2%] items-center">
-                    <Link to="/">
+                    <Link to={!user ? "/" : "/dashboard"}>
                         <img src="/memodea_logo.png" alt="" className="w-[120px]"/>
                     </Link>
-                    <ul className="flex gap-4">
-                        <li>
-                            <Link to="/login" className="font-semibold bg-button-a10 px-4 py-2 rounded-lg hover:opacity-70">
-                            Login
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/register" className="font-semibold bg-button-a20 px-4 py-2 rounded-lg hover:opacity-70">
-                            Register
-                            </Link>
-                        </li>
+                    {!user ? "" :
+                        <div className="hidden md:flex w-full items-center justify-center">
+                            <form  className="flex flex-row gap-4 items-center justify-center w-full px-[15%]" onSubmit={handleSearch}>
+                                <input type="text" placeholder="Search notes by title, content, or tags" className="w-[100%] border px-3 py-2 rounded-md"
+                                value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                                <button
+                                type="submit"
+                                className=" bg-button-a20 text-white px-4 py-2 rounded-md hover:opacity-70 hover:cursor-pointer"
+                                >
+                                Search
+                                </button>
+                            </form>
+                        </div>
+                    }
+                    <ul className="flex gap-4 items-center">
+                        {!user ? (
+                        <>
+                            <li>
+                                <Link to="/login" className="font-semibold bg-button-a10 px-4 py-2 rounded-lg hover:opacity-70">
+                                Login
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/register" className="font-semibold bg-button-a20 px-4 py-2 rounded-lg hover:opacity-70">
+                                Register
+                                </Link>
+                            </li>
+                        </>
+                        ) : (
+                        <>
+                            <li>
+                                <h2 className="text-white pr-4">{user.user.name}</h2>
+                            </li>
+                            <li>
+                                <button onClick={logout} className="font-semibold bg-button-a10 px-4 py-2 rounded-lg hover:opacity-70 hover:cursor-pointer">
+                                Logout
+                                </button>
+                            </li>
+                        </>
+                        )}
                     </ul>
                 </div>
             </nav>

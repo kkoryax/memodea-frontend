@@ -28,8 +28,8 @@ export default function Login() {
                     "Content-Type": "application/json",
                   }
                 });
-            setUser(response.user);
-            navigate("/")
+            setUser(response.data);
+            navigate("/dashboard")
         } catch(err) {
             console.error(err);
             setError(

@@ -38,8 +38,8 @@ export default function Register() {
                   },
                 },
               );
-              setUser(response.user);
-              navigate("/");
+              setUser(response.data);
+              navigate("/login");
         } catch (err) {
             console.error(err)
             setError(
