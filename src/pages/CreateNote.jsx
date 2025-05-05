@@ -40,7 +40,7 @@ const CreateNote = ({ onNoteAdded }) => {
 
   return (
     <div className="max-w-xl mx-auto py-8 px-4 ">
-      <h1 className="text-2xl font-bold mb-6 flex justify-center">Write your memories</h1>
+      <h1 className="text-2xl font-bold mb-6 flex justify-center">Write down your memories</h1>
 
       {error && (
         <div className="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">

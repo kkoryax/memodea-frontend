@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import NavigatorTab from "./components/NavigatorTab";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import NoteDetailsPage from "./pages/NoteDetail";
 
 export default function App() {
   return (
@@ -20,6 +21,14 @@ export default function App() {
                 element={
                   <ProtectedRoute>
                       <UserDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/notes/:noteId"
+                element={
+                  <ProtectedRoute>
+                      <NoteDetailsPage />
                   </ProtectedRoute>
                 }
               />

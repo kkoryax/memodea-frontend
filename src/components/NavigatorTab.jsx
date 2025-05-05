@@ -1,39 +1,22 @@
 import React from "react";
-import axios from "axios";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext"
 import { useState } from "react";
 
 export default function NavigatorTab() {
     const  { user, logout } = useAuth();
-    const [ notes, setNotes ] = useState([]);
+    const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
 
     console.log("User object in NavigatorTab:", user);
 
-    const fetchNotes = async() => {
-        try {
-            const data = await axios.get("http://localhost:3000/mongo/get-all-notes");
-            setNotes(data.notes || []);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
     const handleSearch = async (e) => {
         e.preventDefault();
-        if (!searchQuery.trim()) {
-            fetchNotes();
-            return;
-        }
-        try {
-            const data = await axios.post("http://localhost:3000/mongo/search-notes", {
-                searchQuery
-            });
-            setNotes(data.notes || [])
-        } catch (err) {
-            console.error("Failed to search notes: ", err);
-            SpeechSynthesisErrorEvent("Failed to search notes.");
+        const trimmedQuery = searchQuery.trim();
+        if (trimmedQuery) {
+            navigate(`/dashboard?search=${trimmedQuery}`);
+        } else {
+            navigate('/dashboard');
         }
     }
 

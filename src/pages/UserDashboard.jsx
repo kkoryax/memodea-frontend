@@ -1,6 +1,7 @@
 import { useAuth } from "../../context/AuthContext"
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 import Note from "../components/Note";
 import CreateNote from "./CreateNote";
 import { Calendar } from "@/components/ui/calendar"
@@ -8,6 +9,7 @@ import { Calendar } from "@/components/ui/calendar"
 export default function UserDashboard() {
     const { user } = useAuth();
 
+    const [searchParams] = useSearchParams();
     const [notes, setNotes] = useState([]);
     const [loadingNotes, setLoadingNotes] = useState(true);
     const [error, setError] = useState("");
@@ -16,14 +18,29 @@ export default function UserDashboard() {
     const [date, setDate] = useState(new Date());
 
     const fetchNotes = async () => {
+        setLoadingNotes(true);
+        setError("");
+        const searchQuery = searchParams.get("search");
+
         try {
-          const response = await axios.get("http://localhost:3000/mongo/get-all-notes", {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          });
-          console.log(response.data.notes)
-          setNotes(response.data.notes || []);
+            if (searchQuery) {
+                const response = await axios.get("http://localhost:3000/mongo/search-notes", {
+                    params: { query: searchQuery },
+                    headers: {
+                      Authorization: `Bearer ${user.token}`,
+                    }
+                });
+                console.log("Search results:", response.data);
+                setNotes(response.data.notes || []);
+            } else {
+                const response = await axios.get("http://localhost:3000/mongo/get-all-notes", {
+                  headers: {
+                    Authorization: `Bearer ${user.token}`,
+                  }
+                });
+                console.log("All notes:", response.data.notes);
+                setNotes(response.data.notes || []);
+            }
         } catch (err) {
           console.error(err);
           setError("Failed to load notes.");
@@ -32,9 +49,23 @@ export default function UserDashboard() {
         }
       };
 
+      const handleDeleteNote = async (noteId) => {
+        try {
+          await axios.delete(`http://localhost:3000/mongo/delete-note/${noteId}`, {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            }
+          });
+          fetchNotes();
+        } catch (err) {
+          console.error("Failed to delete note:", err);
+          setError("Failed to delete note.");
+        }
+      };
+
       useEffect(() => {
         fetchNotes();
-      }, []);
+      }, [searchParams]);
 
     return (
         <main className="min-h-screen bg-background-a30 flex flex-col">
@@ -88,14 +119,17 @@ export default function UserDashboard() {
                             </div>
                         </div>
                     )}
-                    {Array.isArray(notes) && notes.length === 0 ?
+                    {loadingNotes ? (
+                        <p className="text-white text-center">Loading notes...</p>
+                    ) : error ? (
+                        <p className="text-red-500 text-center">{error}</p>                    ) : Array.isArray(notes) && notes.length === 0 ?
                     (
                         <p className="text-white">No content rightnow. Start writing!</p>
                     ) :
                     (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                         {notes.map((note) => (
-                            <Note key={note._id} note={note} />
+                            <Note key={note._id} note={note} onDelete={handleDeleteNote}/>
                         ))}
                         </div>
                     )}
