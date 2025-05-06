@@ -75,9 +75,9 @@ const NoteDetailsPage = () => {
   };
 
   if (loading)
-    return <div className="text-center mt-10 text-xl">Loading...</div>;
+    return <div className="text-center text-white text-xl bg-background-a20 w-full h-screen">Loading...</div>;
   if (error)
-    return <div className="text-center mt-10 text-red-500">{error}</div>;
+    return <div className="text-center text-red-500 text-xl bg-background-a20 w-full h-screen">{error}</div>;
 
   return (
     <main className="bg-background-a30 h-screen overflow-hidden">
