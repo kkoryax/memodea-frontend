@@ -24,7 +24,7 @@ export default function UserDashboard() {
 
         try {
             if (searchQuery) {
-                const response = await axios.get("http://localhost:3000/mongo/search-notes", {
+                const response = await axios.get("https://memodea-backend.onrender.com/mongo/search-notes", {
                     params: { query: searchQuery },
                     headers: {
                       Authorization: `Bearer ${user.token}`,
@@ -33,7 +33,7 @@ export default function UserDashboard() {
                 console.log("Search results:", response.data);
                 setNotes(response.data.notes || []);
             } else {
-                const response = await axios.get("http://localhost:3000/mongo/get-all-notes", {
+                const response = await axios.get("https://memodea-backend.onrender.com/mongo/get-all-notes", {
                   headers: {
                     Authorization: `Bearer ${user.token}`,
                   }
@@ -51,7 +51,7 @@ export default function UserDashboard() {
 
       const handleDeleteNote = async (noteId) => {
         try {
-          await axios.delete(`http://localhost:3000/mongo/delete-note/${noteId}`, {
+          await axios.delete(`https://memodea-backend.onrender.com/mongo/delete-note/${noteId}`, {
             headers: {
               Authorization: `Bearer ${user.token}`,
             }

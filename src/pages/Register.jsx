@@ -26,7 +26,7 @@ export default function Register() {
 
         try{
             const response = await axios.post(
-                "http://localhost:3000/mongo/auth/register",
+                "https://memodea-backend.onrender.com/mongo/auth/register",
                 {
                   name: name,
                   email: email,

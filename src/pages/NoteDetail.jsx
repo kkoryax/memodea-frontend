@@ -21,7 +21,7 @@ const NoteDetailsPage = () => {
   useEffect(() => {
     const fetchNote = async () => {
       try {
-        const data = await axios.get(`http://localhost:3000/mongo/get-note/${noteId}`, {
+        const data = await axios.get(`https://memodea-backend.onrender.com/mongo/get-note/${noteId}`, {
             headers: {
                 Authorization: `Bearer ${user.token}`,
               }
@@ -60,7 +60,7 @@ const NoteDetailsPage = () => {
         ...formData,
         tags: formData.tags.split(",").map((tag) => tag.trim()),
       };
-      await axios.put(`http://localhost:3000/mongo/edit-note/${noteId}`, updatedNote,
+      await axios.put(`https://memodea-backend.onrender.com/mongo/edit-note/${noteId}`, updatedNote,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,

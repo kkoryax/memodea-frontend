@@ -18,7 +18,7 @@ export default function Login() {
         setError("");
 
         try {
-            const response = await axios.post("http://localhost:3000/mongo/auth/login",
+            const response = await axios.post("https://memodea-backend.onrender.com/mongo/auth/login",
                 {
                   email: email,
                   password: password

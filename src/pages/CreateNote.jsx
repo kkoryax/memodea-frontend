@@ -15,7 +15,7 @@ const CreateNote = ({ onNoteAdded }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const newNote = await axios.post("http://localhost:3000/mongo/add-note",{
+      const newNote = await axios.post("https://memodea-backend.onrender.com/mongo/add-note",{
         title,
         content,
         tags: tags.split(",").map((tag) => tag.trim()),
