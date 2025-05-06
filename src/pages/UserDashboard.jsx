@@ -4,7 +4,6 @@ import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import Note from "../components/Note";
 import CreateNote from "./CreateNote";
-import { Calendar } from "@/components/ui/calendar"
 
 export default function UserDashboard() {
     const { user } = useAuth();
@@ -75,14 +74,6 @@ export default function UserDashboard() {
                         <span className="font-bold"> {user.user.name}</span> !
                     </h2>
                     <h2 className="text-white text-xl">{user.user.email}</h2>
-                    <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        className="hidden md:flex mt-[5%] rounded-md border w-fit bg-background-a10 text-white"
-                        footer={
-                            date ? `Selected: ${date.toLocaleDateString()}` : "Pick a day."
-                        }/>
                 </div>
                 <div className="-mt-12 md:mt-0 w-full md:w-2/3">
                     <article className="bg-background-a10 mb-6 rounded-2xl shadow-md p-4 flex flex-row gap-6">
