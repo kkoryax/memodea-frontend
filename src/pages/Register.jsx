@@ -5,7 +5,7 @@ import { useAuth } from "../../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 
 export default function Register() {
-    const { setUser } = useAuth();
+    const { user, setUser } = useAuth();
     const navigate = useNavigate();
 
     const [name, setName] = useState("")
@@ -25,7 +25,7 @@ export default function Register() {
           }
 
         try{
-            const response = await axios.post(
+            await axios.post(
                 "https://memodea-backend.onrender.com/mongo/auth/register",
                 {
                   name: name,
@@ -38,8 +38,8 @@ export default function Register() {
                   },
                 },
               );
-              setUser(response.data);
-              navigate("/dashboard");
+              /* setUser(response.data); */
+              {!user ? navigate("/login") : navigate("/dashboard")}
         } catch (err) {
             console.error(err)
             setError(
