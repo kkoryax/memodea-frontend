@@ -14,8 +14,6 @@ export default function UserDashboard() {
     const [error, setError] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [date, setDate] = useState(new Date());
-
     const fetchNotes = async () => {
         setLoadingNotes(true);
         setError("");
@@ -29,7 +27,7 @@ export default function UserDashboard() {
                       Authorization: `Bearer ${user.token}`,
                     }
                 });
-                console.log("Search results:", response.data);
+                /* console.log("Search results:", response.data); */
                 setNotes(response.data.notes || []);
             } else {
                 const response = await axios.get("https://memodea-backend.onrender.com/mongo/get-all-notes", {
@@ -37,7 +35,7 @@ export default function UserDashboard() {
                     Authorization: `Bearer ${user.token}`,
                   }
                 });
-                console.log("All notes:", response.data.notes);
+                /* console.log("All notes:", response.data.notes); */
                 setNotes(response.data.notes || []);
             }
         } catch (err) {

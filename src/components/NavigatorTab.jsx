@@ -8,7 +8,7 @@ export default function NavigatorTab() {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
 
-    console.log("User object in NavigatorTab:", user);
+   /*  console.log("User object in NavigatorTab:", user); */
 
     const handleSearch = async (e) => {
         e.preventDefault();

@@ -39,7 +39,7 @@ export default function Register() {
                 },
               );
               setUser(response.data);
-              navigate("/login");
+              navigate("/dashboard");
         } catch (err) {
             console.error(err)
             setError(
